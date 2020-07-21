@@ -1,5 +1,3 @@
-[TOC]
-
 # java stream的用法
 
 ## 背景
