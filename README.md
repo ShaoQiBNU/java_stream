@@ -133,7 +133,7 @@ System.out.println(lists.stream().flatMap(Collection::stream).filter(str -> str.
 
 #### collect
 
-> collect 方法主要采用collectors类，对stream的值进行聚合操作，Collectors 类实现了很多归约操作，例如将流转换成集合和聚合元素等，具体可参考https://www.jianshu.com/p/ccbb42ad9551。Collectors 可用于返回列表或字符串，主要如下：
+> collect 方法主要采用collectors类，对stream的值进行聚合操作，Collectors 类实现了很多归约操作，可用于返回列表或字符串，例如将流转换成集合和聚合元素等，具体可参考https://www.jianshu.com/p/ccbb42ad9551
 
 ##### Collectors.toList()
 
