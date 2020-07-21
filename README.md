@@ -1,24 +1,3 @@
-- [java stream的用法](#java-stream---)
-  * [背景](#--)
-  * [什么是stream](#---stream)
-  * [生成流](#---)
-  * [流操作](#---)
-    + [处理操作](#----)
-      - [filter](#filter)
-      - [sorted](#sorted)
-      - [map](#map)
-      - [flatMap 方法](#flatmap---)
-      - [foreach](#foreach)
-    + [聚合操作](#----)
-      - [collect](#collect)
-        * [Collectors.toList()](#collectorstolist--)
-        * [Collectors.toSet()](#collectorstoset--)
-        * [Collectors.toMap(x -> x, x -> x + 1)](#collectorstomap-x----x--x----x---1-)
-        * [Collectors.joining(",")](#collectorsjoining-----)
-      - [统计](#--)
-
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 # java stream的用法
 
 ## 背景
