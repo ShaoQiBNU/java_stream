@@ -2,6 +2,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static jdk.nashorn.internal.objects.NativeFunction.function;
+
 public class Main {
     public static void main(String args[]){
         List<String> strings = Arrays.asList("abc", "", "bc", "efg", "abcd","", "jkl", "abc");
@@ -13,12 +15,14 @@ public class Main {
 
         s = strings.parallelStream();
 
+        System.out.println("filter");
 
         // filter 筛选元素>3的个数
         List<Integer> list = Arrays.asList(1,2,3,4,5);
         System.out.println(list.stream().filter(value -> value > 3).count());
 
-        System.out.println();
+
+        System.out.println("sorted");
 
         // sorted
         List<Integer> list2 = Arrays.asList(11, 22, 22, 3, 14, 5);
@@ -26,14 +30,16 @@ public class Main {
         System.out.println();
         list2.stream().filter(value -> value > 3).sorted(Comparator.reverseOrder()).distinct().forEach(System.out::println);
 
-        System.out.println();
+
+        System.out.println("map");
 
         // map
         List<String> upperList = Arrays.asList("a","b","c");
         List<String> res = upperList.stream().map(value -> value.toUpperCase()).collect(Collectors.toList());
         res.forEach(System.out::println);
 
-        System.out.println();
+
+        System.out.println("flatmap");
 
         // flatmap
         List<List<String>> lists = new ArrayList<>();
@@ -43,33 +49,37 @@ public class Main {
 
         System.out.println(lists.stream().flatMap(Collection::stream).filter(str -> str.length() > 2).count());
 
-        System.out.println();
+
+        System.out.println("collect toList");
 
         // collect toList
         List<String> res1 = strings.stream().filter(string -> !string.isEmpty()).sorted()
                 .map(value -> value.toUpperCase()).collect(Collectors.toList());
         res1.forEach(System.out::println);
 
-        System.out.println();
+
+        System.out.println("collect toSet");
 
         // collect toSet
         Set<String> res2 = strings.stream().filter(string -> !string.isEmpty()).sorted(Comparator.reverseOrder())
                 .map(value -> value.toUpperCase()).collect(Collectors.toSet());
         res2.forEach(System.out::println);
 
-        System.out.println();
+
+        System.out.println("collect map");
 
         // collect map
         Map<String, String> res3 = upperList.stream().filter(string -> !string.isEmpty()).collect(Collectors.toMap(e->e, e->e.toUpperCase()));
         res3.entrySet().stream().forEach(e-> System.out.println(e.getKey() + " : " + e.getValue()));
 
-        System.out.println();
+
+        System.out.println("collect 拼接字符串");
 
         // collect 拼接字符串
         String mergedString = strings.stream().filter(string -> !string.isEmpty()).collect(Collectors.joining(", "));
         System.out.println("合并字符串: " + mergedString);
 
-        System.out.println();
+        System.out.println("列表统计");
 
         // 列表统计
         List<Integer> numbers = Arrays.asList(3, 2, 2, 3, 7, 3, 5);
@@ -82,14 +92,20 @@ public class Main {
         System.out.println("平均数 : " + stats.getAverage());
 
 
+        System.out.println("foreach");
+
+        List<String> res4 = new LinkedList<>();
+
+        strings.stream().forEach(e-> res4.add(e));
+        res4.forEach(System.out::println);
 
 
+        System.out.println("map");
 
+        List<String> res5 = new LinkedList<>();
 
-
-
-
-
+        strings.stream().map(e-> res5.add(e));
+        res5.forEach(System.out::println);
 
 
     }

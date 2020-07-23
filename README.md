@@ -127,7 +127,49 @@ System.out.println(lists.stream().flatMap(Collection::stream).filter(str -> str.
 
 #### foreach
 
-> forEach来迭代流中的每个数据。
+> forEach来迭代流中的每个数据，forEach 接收一个 Consumer 接口，它只接收参数，没有返回值，然后在 Stream 的每一个元素上执行该表达式。`forEach()`方法不会返回执行结果，而是`undefined`。
+
+```java
+Stream<String> stream = Stream.of("I", "love", "you");
+stream.forEach(System.out::println);
+```
+
+#### Map和foreach的区别
+
+- `map()`会分配内存空间存储新数组并返回，`forEach()`不会返回数据执行结果，是`undefined`。
+- `forEach()`允许`callback`更改原始数组的元素。`map()`返回新的数组。
+
+综上，生成一个新的对象的时候，使用 map 会更好；只是操作 list 内部的对象时，比如存入数据库或打印出来，用 forEach。
+
+下面这段代码，map的操作是无效的，res5不会变化
+
+```java
+List<String> res4 = new LinkedList<>();
+
+strings.stream().forEach(e-> res4.add(e));
+res4.forEach(System.out::println);
+
+
+System.out.println("map");
+
+List<String> res5 = new LinkedList<>();
+
+strings.stream().map(e-> res5.add(e));
+res5.forEach(System.out::println);
+
+返回结果：
+
+foreach
+abc
+
+bc
+efg
+abcd
+
+jkl
+abc
+map
+```
 
 ### 聚合操作
 
