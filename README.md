@@ -136,6 +136,8 @@ stream.forEach(System.out::println);
 
 #### Map和foreach的区别
 
+可参考：https://www.jianshu.com/p/92e6bf8c2bf8
+
 - `map()`会分配内存空间存储新数组并返回，`forEach()`不会返回数据执行结果，是`undefined`。
 - `forEach()`允许`callback`更改原始数组的元素。`map()`返回新的数组。
 
