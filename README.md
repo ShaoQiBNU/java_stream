@@ -1,3 +1,7 @@
+
+
+[TOC]
+
 # java stream的用法
 
 ## 背景
@@ -31,7 +35,13 @@
 >
 > stream() − 为集合创建串行流；parallelStream() − 为集合创建并行流。
 >
-> 两者的区别在于：stream()是顺序执行，而parallelStream()是并行执行，具体可参考：https://zhuanlan.zhihu.com/p/43039062
+> 两者的区别在于：stream()是顺序执行，而parallelStream()是并行执行，两者的区别具体可参考：
+>
+> https://zhuanlan.zhihu.com/p/43039062
+>
+> https://zhuanlan.zhihu.com/p/146182675
+>
+> https://blog.csdn.net/u011001723/article/details/52794455/
 
 ```java
 List<String> strings = Arrays.asList("abc", "", "bc", "efg", "abcd","", "jkl");
@@ -249,6 +259,84 @@ System.out.println("合并字符串: " + mergedString);
 合并字符串: abc, bc, efg, abcd, jkl, abc
 ```
 
+##### Collector收集器详解
+
+> 具体可以参考：
+>
+> https://www.cnblogs.com/webor2006/p/8311074.html
+>
+> https://www.cnblogs.com/webor2006/p/8311074.html
+>
+> https://www.cnblogs.com/webor2006/p/8324390.html
+>
+> https://www.cnblogs.com/webor2006/p/8342427.html
+>
+> 自定义一个collector收集器（list）如下：
+
+```java
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
+
+public class MySetCollector<T> implements Collector<T, List<T>, List<T>> {
+
+    @Override
+    public Supplier<List<T>> supplier () {
+        System.out.println("supplier");
+        return LinkedList::new;
+    }
+
+    @Override
+    public BiConsumer<List<T>, T> accumulator() {
+        System.out.println("accumulator");
+        return (list, item) -> list.add(item);
+    }
+
+    @Override
+    public BinaryOperator<List<T>> combiner() {
+        System.out.println("combiner");
+
+        return (list1, list2)-> {list1.addAll(list2); return list1;};
+    }
+
+    @Override
+    public Function<List<T>, List<T>> finisher() {
+        System.out.println("finisher");
+        return t->t;
+    }
+
+    @Override
+    public Set<Characteristics> characteristics() {
+        System.out.println("characteristics");
+
+        return Collections.unmodifiableSet(EnumSet.of(Characteristics.IDENTITY_FINISH,
+                Characteristics.UNORDERED));
+    }
+
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("new", "new", "year", "day");
+        List<String> res = list.stream().collect(new MySetCollector<>());
+        res.stream().forEach(System.out::println);
+    }
+}
+
+
+返回结果为：
+
+supplier
+accumulator
+combiner
+characteristics
+characteristics
+new
+new
+year
+day
+```
+
 #### 统计
 
 > 一些产生统计结果的收集器也非常有用。它们主要用于int、double、long等基本类型上，可以用来产生类似如下的统计结果。
@@ -272,3 +360,11 @@ System.out.println("平均数 : " + stats.getAverage());
 所有数之和 : 25
 平均数 : 3.5714285714285716
 ```
+
+## lambda表达式
+
+> 具体可参考：
+>
+> https://www.runoob.com/java/java8-lambda-expressions.html
+>
+> https://www.liaoxuefeng.com/wiki/1252599548343744/1305158055100449
